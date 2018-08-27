@@ -276,6 +276,20 @@
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WebApi.BLL\WebApi.BLL.csproj">
+      <Project>{95be709d-be27-4285-ade9-7d8892f42fcf}</Project>
+      <Name>WebApi.BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WebApi.Common\WebApi.Common.csproj">
+      <Project>{2e2adb82-148f-420d-b665-3f12b6c11d2a}</Project>
+      <Name>WebApi.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WebApi.Model\WebApi.Model.csproj">
+      <Project>{f2033675-e02d-4ee0-ac90-559d962aa259}</Project>
+      <Name>WebApi.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
