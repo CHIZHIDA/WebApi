@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="CHIZHIDADatabaseModelStoreContainer" CdmEntityContainer="CHIZHIDADatabaseEntities">
+    <EntitySetMapping Name="logininfo">
+      <EntityTypeMapping TypeName="CHIZHIDADatabaseModel.logininfo">
+        <MappingFragment StoreEntitySet="logininfo">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="userpwd" ColumnName="userpwd" />
+          <ScalarProperty Name="registertime" ColumnName="registertime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

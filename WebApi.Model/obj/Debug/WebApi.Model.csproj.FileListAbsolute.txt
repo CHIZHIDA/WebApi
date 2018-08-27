@@ -1,0 +1,14 @@
+C:\Users\Project\WebApi\WebApi.Model\bin\Debug\WebApi.Model.dll.config
+C:\Users\Project\WebApi\WebApi.Model\bin\Debug\WebApi.Model.dll
+C:\Users\Project\WebApi\WebApi.Model\bin\Debug\WebApi.Model.pdb
+C:\Users\Project\WebApi\WebApi.Model\bin\Debug\EntityFramework.dll
+C:\Users\Project\WebApi\WebApi.Model\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Project\WebApi\WebApi.Model\bin\Debug\EntityFramework.xml
+C:\Users\Project\WebApi\WebApi.Model\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Project\WebApi\WebApi.Model\bin\Debug\zh-Hans\EntityFramework.resources.dll
+C:\Users\Project\WebApi\WebApi.Model\bin\Debug\zh-Hans\EntityFramework.SqlServer.resources.dll
+C:\Users\Project\WebApi\WebApi.Model\obj\Debug\WebApi.Model.csprojAssemblyReference.cache
+C:\Users\Project\WebApi\WebApi.Model\obj\Debug\WebApi.Model.csproj.CoreCompileInputs.cache
+C:\Users\Project\WebApi\WebApi.Model\obj\Debug\WebApi.Model.csproj.CopyComplete
+C:\Users\Project\WebApi\WebApi.Model\obj\Debug\WebApi.Model.dll
+C:\Users\Project\WebApi\WebApi.Model\obj\Debug\WebApi.Model.pdb
