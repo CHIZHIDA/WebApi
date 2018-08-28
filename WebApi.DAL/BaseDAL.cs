@@ -28,9 +28,27 @@ namespace WebApi.DAL
             dbContext.Set<T>().AddOrUpdate(t);
         }
 
-        public IQueryable<T> GetModels(Expression<Func<T,bool>> whereLambda)
+        public IQueryable<T> GetModels(Expression<Func<T, bool>> whereLambda)
         {
             return dbContext.Set<T>().Where(whereLambda);
+        }
+
+        public IQueryable<T> GetModelsByPage<type>(int pageSize, int pageIndex, bool isAsc, Expression<Func<T, type>> OrderByLambda, Expression<Func<T, bool>> WhereLambda)
+        {
+            //是否升序
+            if (isAsc)
+            {
+                return dbContext.Set<T>().Where(WhereLambda).OrderBy(OrderByLambda).Skip((pageIndex - 1) * pageSize).Take(pageSize);
+            }
+            else
+            {
+                return dbContext.Set<T>().Where(WhereLambda).OrderByDescending(OrderByLambda).Skip((pageIndex - 1) * pageSize).Take(pageSize);
+            }
+        }
+
+        public bool SaveChange()
+        {
+            return dbContext.SaveChanges() > 0;
         }
     }
 }
