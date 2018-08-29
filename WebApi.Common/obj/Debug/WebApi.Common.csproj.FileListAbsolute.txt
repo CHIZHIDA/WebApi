@@ -1,6 +1,5 @@
 C:\Users\Project\WebApi\WebApi.Common\bin\Debug\WebApi.Common.dll
 C:\Users\Project\WebApi\WebApi.Common\bin\Debug\WebApi.Common.pdb
-C:\Users\Project\WebApi\WebApi.Common\obj\Debug\WebApi.Common.csprojAssemblyReference.cache
 C:\Users\Project\WebApi\WebApi.Common\obj\Debug\WebApi.Common.csproj.CoreCompileInputs.cache
 C:\Users\Project\WebApi\WebApi.Common\obj\Debug\WebApi.Common.dll
 C:\Users\Project\WebApi\WebApi.Common\obj\Debug\WebApi.Common.pdb

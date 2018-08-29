@@ -1,4 +1,3 @@
-C:\Users\Project\WebApi\WebApi\obj\Debug\WebApi.csprojAssemblyReference.cache
 C:\Users\Project\WebApi\WebApi\obj\Debug\WebApi.csproj.CoreCompileInputs.cache
 C:\Users\Project\WebApi\WebApi\bin\ApplicationInsights.config
 C:\Users\Project\WebApi\WebApi\bin\WebApi.dll.config
@@ -112,6 +111,7 @@ C:\Users\Project\WebApi\WebApi\bin\zh-Hans\System.Web.WebPages.resources.dll
 C:\Users\Project\WebApi\WebApi\bin\zh-Hans\System.Web.WebPages.Deployment.resources.dll
 C:\Users\Project\WebApi\WebApi\bin\zh-Hans\System.Web.WebPages.Razor.resources.dll
 C:\Users\Project\WebApi\WebApi\bin\zh-Hans\EntityFramework.resources.dll
+C:\Users\Project\WebApi\WebApi\obj\Debug\WebApi.csprojAssemblyReference.cache
 C:\Users\Project\WebApi\WebApi\obj\Debug\WebApi.csproj.CopyComplete
 C:\Users\Project\WebApi\WebApi\obj\Debug\WebApi.dll
 C:\Users\Project\WebApi\WebApi\obj\Debug\WebApi.pdb

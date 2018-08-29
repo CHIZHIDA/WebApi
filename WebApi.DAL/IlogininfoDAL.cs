@@ -7,7 +7,7 @@ using WebApi.Model;
 
 namespace WebApi.DAL
 {
-    interface Ilogininfo:IBaseDAL<logininfo>
+    public partial interface IlogininfoDAL:IBaseDAL<logininfo>
     {
 
     }

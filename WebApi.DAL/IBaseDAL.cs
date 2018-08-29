@@ -17,12 +17,12 @@ namespace WebApi.DAL
 
         IQueryable<T> GetModels(Expression<Func<T, bool>> whereLambda);
 
-        IQueryable<T> GetModelsByPage(int pageSize, int pageIndex, bool isAsc, Expression<Func<T, Type>> OrderbyLambda, Expression<Func<T, bool>> whereLambda);
+        IQueryable<T> GetModelsByPage<type>(int pageSize, int pageIndex, bool isAsc, Expression<Func<T, type>> OrderByLambda, Expression<Func<T, bool>> WhereLambda);
+
         /// <summary>
         /// 一个业务中有可能涉及到对多张表的操作，那么可以将数据的操作，打上对应的标记，最后调用该方法，将数据一次性提交到数据库中，避免的多次链接数据库
         /// </summary>
         /// <returns></returns>
-
         bool SaveChanges();
     }
 }
