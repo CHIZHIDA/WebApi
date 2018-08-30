@@ -11,3 +11,4 @@ C:\Users\Project\WebApi\WebApi.Model\obj\Debug\WebApi.Model.csproj.CoreCompileIn
 C:\Users\Project\WebApi\WebApi.Model\obj\Debug\WebApi.Model.csproj.CopyComplete
 C:\Users\Project\WebApi\WebApi.Model\obj\Debug\WebApi.Model.dll
 C:\Users\Project\WebApi\WebApi.Model\obj\Debug\WebApi.Model.pdb
+C:\Users\Project\WebApi\WebApi.Model\obj\Debug\WebApi.Model.csprojAssemblyReference.cache

@@ -16,3 +16,5 @@ C:\Users\Project\WebApi\WebApi.BLL\bin\Debug\zh-Hans\EntityFramework.resources.d
 C:\Users\Project\WebApi\WebApi.BLL\obj\Debug\WebApi.BLL.csproj.CopyComplete
 C:\Users\Project\WebApi\WebApi.BLL\obj\Debug\WebApi.BLL.dll
 C:\Users\Project\WebApi\WebApi.BLL\obj\Debug\WebApi.BLL.pdb
+C:\Users\Project\WebApi\WebApi.BLL\bin\Debug\Autofac.dll
+C:\Users\Project\WebApi\WebApi.BLL\bin\Debug\Autofac.xml

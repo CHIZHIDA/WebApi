@@ -115,3 +115,8 @@ C:\Users\Project\WebApi\WebApi\obj\Debug\WebApi.csprojAssemblyReference.cache
 C:\Users\Project\WebApi\WebApi\obj\Debug\WebApi.csproj.CopyComplete
 C:\Users\Project\WebApi\WebApi\obj\Debug\WebApi.dll
 C:\Users\Project\WebApi\WebApi\obj\Debug\WebApi.pdb
+C:\Users\Project\WebApi\WebApi\bin\WebApi.DAL.dll
+C:\Users\Project\WebApi\WebApi\bin\Autofac.dll
+C:\Users\Project\WebApi\WebApi\bin\WebApi.DAL.pdb
+C:\Users\Project\WebApi\WebApi\bin\WebApi.DAL.dll.config
+C:\Users\Project\WebApi\WebApi\bin\Autofac.xml

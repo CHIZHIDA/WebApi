@@ -17,3 +17,5 @@ C:\Users\Project\WebApi\WebApi.DAL\bin\Debug\zh-Hans\EntityFramework.SqlServer.r
 C:\Users\Project\WebApi\WebApi.DAL\obj\Debug\WebApi.DAL.csproj.CopyComplete
 C:\Users\Project\WebApi\WebApi.DAL\obj\Debug\WebApi.DAL.dll
 C:\Users\Project\WebApi\WebApi.DAL\obj\Debug\WebApi.DAL.pdb
+C:\Users\Project\WebApi\WebApi.DAL\bin\Debug\Autofac.dll
+C:\Users\Project\WebApi\WebApi.DAL\bin\Debug\Autofac.xml
