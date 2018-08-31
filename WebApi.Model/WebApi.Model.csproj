@@ -69,6 +69,7 @@
       <DependentUpon>logininfo.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="userpwdmd5.cs" />
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="logininfo.edmx">

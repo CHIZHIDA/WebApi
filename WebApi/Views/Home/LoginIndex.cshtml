@@ -1,0 +1,56 @@
+﻿@using WebApi.Model;
+@model List<WebApi.Model.logininfo>
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <div>
+        <h1>简单的画一个表格展示数据</h1>
+        <table border="1" cellpadding="0" cellspacing="0">
+            <tr>
+                <th>ID</th>
+                <th>姓名</th>
+                <th>密码</th>
+                <th>注册时间</th>
+            </tr>
+            @foreach (logininfo info in Model)
+            {
+                <tr>
+                    <td>@info.id</td>
+                    <td>@info.username</td>
+                    <td>@info.userpwd</td>
+                    <td>@info.registertime</td>
+                </tr>
+            }
+        </table>
+        <hr />
+        <h1>增加</h1>
+        <form action="@Url.Action("Add", "Home")" method="POST">
+            昵称:<input name="username" />
+            密码:<input name="userpwd" />
+            <button type="submit">提交</button>
+        </form>
+        <hr />
+        <h1>修改</h1>
+        <form action="@Url.Action("Update", "Home")" method="POST">
+            i d :<input name="id"/> 
+            昵称:<input name="username" />
+            密码:<input name="userpwd" />
+            <button type="submit">提交</button>
+        </form>
+        <hr />
+        <h1>删除</h1>
+        <form action="@Url.Action("Delete", "Home")" method="POST">
+            昵称:<input name="username" />
+            密码:<input name="userpwd" />
+            <button type="submit">提交</button>
+        </form>
+    </div>
+</body>
+</html>

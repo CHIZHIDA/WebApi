@@ -17,6 +17,6 @@ namespace WebApi.Model
         public int id { get; set; }
         public string username { get; set; }
         public string userpwd { get; set; }
-        public System.DateTime registertime { get; set; }
+        public System.DateTime registertime { get; set; } = DateTime.Now;
     }
 }

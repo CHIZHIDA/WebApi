@@ -33,7 +33,7 @@ namespace WebApi.BLL
                 throw new Exception("IOC实例化出错" + ex.Message);
             }
 
-            return Resolve<T>();
+            return container.Resolve<T>();
         }
 
         /// <summary>
