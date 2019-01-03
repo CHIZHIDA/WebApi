@@ -51,8 +51,8 @@ namespace Token.Controllers
         {
             return true;
         }
-
-        public bool TestCacheToken(string str)
+        
+        public bool TestCacheToken([FromBody]LoginInfo logininfo)
         {
             return false;
         }

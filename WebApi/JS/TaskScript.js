@@ -4,6 +4,7 @@ var data = JsonConvert.SerializeObject(product);
 aa();
 
 function aa() {
+    debugger
     var obj = [];
     obj = { Id = 1, Name = "安慕希", Count = 10, Price = 58.8 };
 

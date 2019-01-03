@@ -28,7 +28,7 @@ namespace Token.Controllers
                 {"sub", M.sub},//非必须。该JWT所面向的用户
                 {"jti", M.jti},//非必须。JWT ID。针对当前token的唯一标识
                 {"UserName", M.UserName},//自定义字段 用于存放当前登录人账户信息
-                {"UserPwd", M.UserPwd},//自定义字段 用于存放当前登录人登录密码信息
+                //{"UserPwd", M.UserPwd},//自定义字段 用于存放当前登录人登录密码信息
                 {"UserRole", M.UserRole},//自定义字段 用于存放当前登录人登录权限信息
             };
 
