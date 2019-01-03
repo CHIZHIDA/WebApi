@@ -42,7 +42,7 @@ namespace Token.Controllers
         }
 
         [AllowAnonymous]
-        public bool TestCacheToken()
+        public bool TestException()
         {
             throw new Exception("Exception Test");
         }
@@ -50,6 +50,11 @@ namespace Token.Controllers
         public bool TestToken([FromBody]TokenInfo token)
         {
             return true;
+        }
+
+        public bool TestCacheToken(string str)
+        {
+            return false;
         }
 
         /// <summary>

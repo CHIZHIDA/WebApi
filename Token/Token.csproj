@@ -251,6 +251,7 @@
     <Compile Include="Methods\JsonHelper.cs" />
     <Compile Include="Filters\WebApiAuthenticationFilterAttribute.cs" />
     <Compile Include="Methods\UtilityHelper.cs" />
+    <Compile Include="Models\LoginInfo.cs" />
     <Compile Include="Models\RESTJson.cs" />
     <Compile Include="Models\TokenInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -264,6 +265,7 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="JS\TaskScript.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />

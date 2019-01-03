@@ -46,7 +46,7 @@ namespace Token.Filters
             //Json反序列化
             TokenInfo tokenInfo = JsonHelper.JsonDeserialize<TokenInfo>(json);
 
-            var token = tokenInfo.Token;
+            var token = tokenInfo.SignToken;
             var loginname = tokenInfo.UserName;
 
             //判断json字符串中是否携带token和loginname信息
@@ -67,7 +67,7 @@ namespace Token.Filters
             }
 
             //比较token和cache缓存中的token是否一致
-            if (token != chacheTokenInfo.Token)
+            if (token != chacheTokenInfo.SignToken)
             {
                 Challenge(actionContext, TokenIllegalMessage);
                 return;
