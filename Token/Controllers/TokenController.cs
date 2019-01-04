@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -28,7 +29,7 @@ namespace Token.Controllers
             }
 
             //从Cache缓存中读取数据
-            TokenInfo chacheTokenInfo = (TokenInfo)HttpRuntime.Cache.Get(loginname);
+            var chacheTokenInfo = HttpRuntime.Cache.Get(loginname);
 
             if (chacheTokenInfo == null)
             {
@@ -51,9 +52,19 @@ namespace Token.Controllers
         {
             return true;
         }
-        
+
+        [AllowAnonymous]
         public bool TestCacheToken([FromBody]LoginInfo logininfo)
         {
+            string timestemp = UtilityHelper.GetTimestamp(DateTime.Now).ToString();
+
+            Random random = new Random();
+            string strrandom = random.Next(1000, 10000).ToString();     //随机生成一个大于等于1000，小于10000的四位随机数
+
+            var data = JsonConvert.SerializeObject(logininfo);    //序列化参数
+
+            var aa = UtilityHelper.GetSignature(timestemp, strrandom, logininfo.loginName, data);
+
             return false;
         }
 
@@ -75,21 +86,6 @@ namespace Token.Controllers
             }
 
             return true;
-        }
-        
-        /// <summary>
-        /// 判断Token是否有效
-        /// </summary>
-        /// <param name="username"></param>
-        /// <returns></returns>
-        public bool IsExitTokenInfo(string username)
-        {
-            if (HttpRuntime.Cache.Get(username) != null)
-            {
-                return true;
-            }
-
-            return false;
         }
     }
 }

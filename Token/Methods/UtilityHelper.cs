@@ -27,15 +27,15 @@ namespace Token.Methods
             tokenInfo.UserName = loginname;
             tokenInfo.SignToken = Guid.NewGuid().ToString();    //创建一个GUID作为签名Token
 
-            FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(0, tokenInfo.UserName, DateTime.Now,
-                            DateTime.Now.AddMinutes(1), true, string.Format("{0}&{1}&{2}", tokenInfo.UserName, tokenInfo.SignToken, tokenInfo.UserRole),
-                            FormsAuthentication.FormsCookiePath);
+            //FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(0, tokenInfo.UserName, DateTime.Now,
+            //                DateTime.Now.AddMinutes(1), true, string.Format("{0}&{1}&{2}", tokenInfo.UserName, tokenInfo.SignToken, tokenInfo.UserRole),
+            //                FormsAuthentication.FormsCookiePath);
 
-            string Token = FormsAuthentication.Encrypt(ticket);
+            //string Token = FormsAuthentication.Encrypt(ticket);
 
             //写入Cache缓存
             //HttpRuntime.Cache.Insert(loginname, tokenInfo, null, DateTime.Now.AddMinutes(20), TimeSpan.Zero); //设置绝对过期时间
-            HttpRuntime.Cache.Insert(loginname, Token, null, DateTime.MaxValue, TimeSpan.FromMinutes(5));   //设置变化时间过期(平滑过期)
+            HttpRuntime.Cache.Insert(loginname, tokenInfo, null, DateTime.MaxValue, TimeSpan.FromMinutes(5));   //设置变化时间过期(平滑过期)
 
             return tokenInfo.SignToken;
         }
@@ -93,7 +93,8 @@ namespace Token.Methods
                 return null;
             }
 
-            TokenInfo tokenInfo = (TokenInfo)HttpRuntime.Cache.Get(loginname);
+            TokenInfo tokenInfo = HttpRuntime.Cache.Get(loginname) as TokenInfo;
+
             if (tokenInfo != null)
             {
                 return tokenInfo;
@@ -105,7 +106,7 @@ namespace Token.Methods
         }
 
         /// <summary>
-        /// 
+        /// 获取签名认证字符串
         /// </summary>
         /// <param name="timeStamp">发起请求时的时间戳（单位：毫秒）</param>
         /// <param name="nonce">随机数</param>
@@ -137,7 +138,41 @@ namespace Token.Methods
             else
             {
                 throw new Exception("token为null，用户名称为：" + loginname);
-            }            
+            }
+        }
+
+        /// <summary>
+        /// 判断Token是否有效
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        public static bool IsExitTokenInfo(string username)
+        {
+            if (HttpRuntime.Cache.Get(username) != null)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// 获取1970-01-01至dateTime的毫秒数
+        /// </summary>
+        public static long GetTimestamp(DateTime dateTime)
+        {
+            DateTime dt = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+            return (dateTime.Ticks - dt.Ticks) / 10000;
+        }
+
+        /// <summary>
+        /// 根据时间戳timestamp（单位毫秒）计算日期
+        /// </summary>
+        public static DateTime NewDate(long timestamp)
+        {
+            DateTime dt = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+            long tt = dt.Ticks + timestamp * 10000;
+            return new DateTime(tt);
         }
 
         /// <summary>
