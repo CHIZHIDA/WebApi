@@ -36,6 +36,11 @@ namespace Token.Filters
             StreamReader reader = new StreamReader(HttpContext.Current.Request.InputStream);
             string json = HttpUtility.UrlDecode(reader.ReadToEnd());
 
+            var a = actionContext.Request.Headers.GetValues("aa");
+            var b = actionContext.Request.Headers.GetValues("bb");
+            var c = actionContext.Request.Headers.GetValues("cc");
+            var d = actionContext.Request.Headers.GetValues("dd");
+
             //判断参数是否携带json字符串
             if (string.IsNullOrEmpty(json))
             {

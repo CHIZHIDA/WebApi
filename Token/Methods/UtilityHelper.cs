@@ -174,36 +174,5 @@ namespace Token.Methods
             long tt = dt.Ticks + timestamp * 10000;
             return new DateTime(tt);
         }
-
-        /// <summary>
-        /// get请求：按照请求参数名称将所有请求参数按照字母先后顺序排序得到
-        /// </summary>
-        /// <param name="parames"></param>
-        /// <returns></returns>
-        public static Tuple<string, string> GetQueryString(Dictionary<string, string> parames)
-        {
-            // 第一步：把字典按Key的字母顺序排序
-            IDictionary<string, string> sortedParams = new SortedDictionary<string, string>(parames);
-            IEnumerator<KeyValuePair<string, string>> dem = sortedParams.GetEnumerator();
-
-            // 第二步：把所有参数名和参数值串在一起
-            StringBuilder query = new StringBuilder("");  //签名字符串
-            StringBuilder queryStr = new StringBuilder(""); //url参数
-            if (parames == null || parames.Count == 0)
-                return new Tuple<string, string>("", "");
-
-            while (dem.MoveNext())
-            {
-                string key = dem.Current.Key;
-                string value = dem.Current.Value;
-                if (!string.IsNullOrEmpty(key))
-                {
-                    query.Append(key).Append(value);
-                    queryStr.Append("&").Append(key).Append("=").Append(value);
-                }
-            }
-
-            return new Tuple<string, string>(query.ToString(), queryStr.ToString().Substring(1, queryStr.Length - 1));
-        }
     }
 }
