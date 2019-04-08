@@ -16,6 +16,12 @@ namespace Token.Models
         /// <returns></returns>
         public static Dictionary<string, object> ObjConvertDic(Dictionary<string, object> dic, T obj)
         {
+            //判空
+            if (obj == null)
+            {
+                return dic;
+            }
+
             Type t = obj.GetType(); // 获取对象对应的类， 对应的类型
 
             PropertyInfo[] pi = t.GetProperties(BindingFlags.Public | BindingFlags.Instance); // 获取当前type公共属性

@@ -121,17 +121,19 @@ namespace Token.Methods
             {
                 try
                 {
-                    //加载公钥
-                    var publicXmlKey = File.ReadAllText(pathToPublicKey);
+                    //加载公钥读取xml
+                    string publicXmlKey = File.ReadAllText(pathToPublicKey);
                     rsa.FromXmlString(publicXmlKey);
 
-                    var bytesToEncrypt = Encoding.Unicode.GetBytes(plainText);
-                    //var bytesToEncrypt = Encoding.GetEncoding("gb2312").GetBytes(plainText);
+                    byte[] bytesToEncrypt = Encoding.Unicode.GetBytes(plainText);
 
-                    //分段加密
+                    //分段加密 
+                    //1024位的证书，加密时最大支持117个字节，解密时为128；2048位的证书，加密时最大支持245个字节，解密时为256。
                     int keySize = rsa.KeySize / 8;
                     int bufferSize = keySize - 11;
                     byte[] buffer = new byte[bufferSize];
+
+                    //内存流,为系统内存提供读写操作
                     MemoryStream msInput = new MemoryStream(bytesToEncrypt);
                     MemoryStream msOuput = new MemoryStream();
                     int readLen = msInput.Read(buffer, 0, bufferSize);
@@ -140,6 +142,7 @@ namespace Token.Methods
                     {
                         byte[] dataToEnc = new byte[readLen];
                         Array.Copy(buffer, 0, dataToEnc, 0, readLen);
+                        //加密  使用从缓冲区读取的数据将字节块写入当前流
                         byte[] encData = rsa.Encrypt(dataToEnc, false);
                         msOuput.Write(encData, 0, encData.Length);
                         readLen = msInput.Read(buffer, 0, bufferSize);
@@ -178,35 +181,29 @@ namespace Token.Methods
                     var bytesEncrypted = Convert.FromBase64String(encryptedText);
 
                     //分段解密
+                    //1024位的证书，加密时最大支持117个字节，解密时为128；2048位的证书，加密时最大支持245个字节，解密时为256。
                     int keySize = rsa.KeySize / 8;
-                    //int bufferSize = keySize - 11;
-                    //byte[] buffer = new byte[bufferSize];
                     byte[] buffer = new byte[keySize];
 
+                    //内存流,为系统内存提供读写操作
                     MemoryStream msInput = new MemoryStream(bytesEncrypted);
                     MemoryStream msOuput = new MemoryStream();
-                    //int readLen = msInput.Read(buffer, 0, bufferSize);
                     int readLen = msInput.Read(buffer, 0, keySize);
 
                     while (readLen > 0)
                     {
                         byte[] dataToDec = new byte[readLen];
                         Array.Copy(buffer, 0, dataToDec, 0, readLen);
+                        //解密    使用从缓冲区读取的数据将字节块写入当前流
                         byte[] encData = rsa.Decrypt(dataToDec, false);
                         msOuput.Write(encData, 0, encData.Length);
-                        //readLen = msInput.Read(buffer, 0, bufferSize);
                         readLen = msInput.Read(buffer, 0, keySize);
-
                     }
 
+                    //关闭内存流
                     msInput.Close();
                     byte[] result = msOuput.ToArray();    //得到解密结果
                     msOuput.Close();
-
-
-
-
-                    //var bytesPlainText = rsa.Decrypt(bytesEncrypted, false);
 
                     return System.Text.Encoding.Unicode.GetString(result);
                 }
@@ -226,30 +223,35 @@ namespace Token.Methods
         /// </summary>
         /// <param name="sign"></param>
         /// <returns></returns>
-        public static bool CheckSign(string str)
+        public static bool CheckSign(string message)
         {
-            string[] arrstr = str.Split('_');
-            string sign = null;
-            if (arrstr.Length > 0)
+            //截取第一个下划线'_'前的文本为消息头，最后一个下划线'_'后的文本为签名
+            string[] list = message.Split('_');
+            string messageHeader = list[0];
+            //待验签的数据
+            string buffer = list[list.Length - 1];
+
+            //查看消息头是否正确
+            if (messageHeader != ConfigurationManager.AppSettings["messageHeader"])
             {
-                sign = arrstr[arrstr.Length - 1];
+                return false;
             }
 
-            string firststr = str.Substring(0, str.Length - sign.Length - 1);
+            //文本截取签名（含下划线'_'）后，是已签名的数据
+            string signature = message.Substring(0, message.Length - buffer.Length - 1);
+            byte[] hashByteSignature = Encoding.Unicode.GetBytes(signature);
 
-            byte[] hashByteSignture = Convert.FromBase64String(sign);
-
+            //加载发送方的公钥进行验签
             var rsa = new RSACryptoServiceProvider();
-            var privateXmlKey = File.ReadAllText(Path.Combine(basePathToStoreKeys, publicKeyFileName));
-            rsa.FromXmlString(privateXmlKey);
-
+            var publicXmlKey = File.ReadAllText(Path.Combine(ConfigurationManager.AppSettings["basePathToStoreClientKeys"], "ClientRSA.Pub"));
+            rsa.FromXmlString(publicXmlKey);
+            
             //MD5 mD5 = new MD5CryptoServiceProvider();
-            //rsa.VerifyData(System.Text.Encoding.UTF8.GetBytes(firststr), mD5, Convert.FromBase64String(sign));
+            //rsa.VerifyData(hashByteSignature, mD5, Convert.FromBase64String(buffer));
+            //rsa.VerifyData(hashByteSignature, CryptoConfig.MapNameToOID("MD5"), Convert.FromBase64String(buffer));
 
-            return rsa.VerifyHash(System.Text.Encoding.UTF8.GetBytes(firststr), "MD5", Convert.FromBase64String(sign));
-
-            //RSAPKCS1SignatureDeformatter deformatter = new RSAPKCS1SignatureDeformatter(rsa);
-            //deformatter.VerifySignature(,hashByteSignture);
+            //哈希算法有：SHA1(160bit)、SHA256(256bit)、MD5(128bit)
+            return rsa.VerifyData(hashByteSignature, CryptoConfig.MapNameToOID("SHA1"), Convert.FromBase64String(buffer));
         }
     }
 }

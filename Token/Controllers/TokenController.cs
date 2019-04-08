@@ -78,9 +78,14 @@ namespace Token.Controllers
         /// </summary>
         /// <returns></returns>
         [AllowAnonymous]
-        public string CreateClientKeyPath()
+        public RESTJson CreateClientKeyPath()
         {
-            return ClientEncryptionHelper.GenerateKeys();
+            RESTJson result = new RESTJson();
+
+            result.ErrMsg = ClientEncryptionHelper.GenerateKeys();
+            result.ErrCode = 1;
+
+            return result;
         }
 
         /// <summary>
@@ -90,8 +95,10 @@ namespace Token.Controllers
         /// <returns></returns>
         [AllowAnonymous]
         [HttpPost]
-        public string GetClientEncryptionKey([FromBody]LoginInfo loginInfo)
+        public RESTJson GetClientEncryptionKey([FromBody]LoginInfo loginInfo)
         {
+            RESTJson result = new RESTJson();
+
             //非业务参数（如：时间戳等）
             HeadersInfo headersInfo = new HeadersInfo();
 
@@ -104,8 +111,23 @@ namespace Token.Controllers
             //使用请求方的私钥进行加密生成签名
             string sign = ClientEncryptionHelper.privateToSign(str);
 
+            //判空
+            if(string.IsNullOrEmpty(sign))
+            {
+                result.ErrMsg = "生成报文失败";
+                return result;
+            }
+
             //使用接收方的公钥进行加密生成加密报文
-            return ServerEncryptionHelper.PubKeyEncryption(str += '_' + sign);
+            string message = ServerEncryptionHelper.PubKeyEncryption(str += '_' + sign);
+            if (!string.IsNullOrEmpty(message))
+            {
+                result.ErrCode = 1;
+                result.ErrMsg = "生成报文成功";
+                result.Data = message;
+            }
+
+            return result;
         }
         #endregion
 
@@ -115,9 +137,14 @@ namespace Token.Controllers
         /// </summary>
         /// <returns></returns>
         [AllowAnonymous]
-        public string CreateServerKeyPath()
+        public RESTJson CreateServerKeyPath()
         {
-            return ServerEncryptionHelper.GenerateKeys();
+            RESTJson result = new RESTJson();
+
+            result.ErrMsg = ServerEncryptionHelper.GenerateKeys();
+            result.ErrCode = 1;
+
+            return result;
         }
 
         /// <summary>
@@ -135,26 +162,22 @@ namespace Token.Controllers
             string timestamp = HttpContext.Current.Request.Headers["timestamp"];
             string sign = HttpContext.Current.Request.Headers["sign"];
 
-            ////使用接收方密钥解密报文
+            //使用接收方密钥解密报文
             string message = ServerEncryptionHelper.PriKeyDecrypted(sign);
 
-            ////截取第一个下划线'_'前的文本为消息头，最后一个下划线'_'后的文本为签名
-            //string[] list = message.Split('_');
-
-            //string messageHeader = list[0];
-            //string deSign = list[list.Length - 1];
-
-            ////查看消息头是否正确
-            //if (messageHeader != ConfigurationManager.AppSettings["messageHeader"])
-            //{
-            //    result.ErrMsg = "非法数据";
-            //    return result;
-            //}
-
             //验签
-            ServerEncryptionHelper.CheckSign(message);
+            if (ServerEncryptionHelper.CheckSign(message))
+            {
+                result.ErrCode = 1;
+                result.ErrMsg = "合法数据";
+            }
+            else
+            {
+                result.ErrCode = -1;
+                result.ErrMsg = "非法数据";
+            }
 
-            return null;
+            return result;
         }
         #endregion
 

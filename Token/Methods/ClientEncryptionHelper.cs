@@ -171,20 +171,28 @@ namespace Token.Methods
         /// <returns></returns>
         public static string privateToSign(string str)
         {
+            //判空
+            if(string.IsNullOrEmpty(str))
+            {
+                return null;
+            }
+
             //要签名文本编码为base64字节
-            byte[] hashByteSignture = System.Text.Encoding.UTF8.GetBytes(str);
+            byte[] hashByteSignture = System.Text.Encoding.Unicode.GetBytes(str);
 
             //加载私钥
             RSACryptoServiceProvider rsa = new RSACryptoServiceProvider();
             var privateXmlKey = File.ReadAllText(Path.Combine(basePathToStoreKeys, privateKeyFileName));
             rsa.FromXmlString(privateXmlKey);
 
-            ////设置MD5签名
-            //RSAPKCS1SignatureFormatter formatter = new RSAPKCS1SignatureFormatter(rsa);
-            //formatter.SetHashAlgorithm("MD5");
-            //string sign = Convert.ToBase64String(formatter.CreateSignature(hashByteSignture));
+            //设置MD5签名
+            MD5 mD5 = new MD5CryptoServiceProvider();
 
-            byte[] sign = rsa.SignData(hashByteSignture, "MD5");
+
+            //签名
+            //byte[] sign = rsa.SignData(hashByteSignture, mD5);
+            byte[] sign = rsa.SignData(hashByteSignture, mD5);
+
             return Convert.ToBase64String(sign);
         }
     }
