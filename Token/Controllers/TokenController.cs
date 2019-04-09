@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Web;
 using System.Web.Http;
 using System.Web.Security;
+using Token.Enums;
 using Token.Methods;
 using Token.Models;
 
@@ -112,7 +113,7 @@ namespace Token.Controllers
             string sign = ClientEncryptionHelper.privateToSign(str);
 
             //判空
-            if(string.IsNullOrEmpty(sign))
+            if (string.IsNullOrEmpty(sign))
             {
                 result.ErrMsg = "生成报文失败";
                 return result;
@@ -150,11 +151,10 @@ namespace Token.Controllers
         /// <summary>
         /// 服务端验签
         /// </summary>
-        /// <param name="loginInfo"></param>
         /// <returns></returns>
         [AllowAnonymous]
         [HttpPost]
-        public RESTJson ServerInspectionSign([FromBody]LoginInfo loginInfo)
+        public static string ServerInspectionSign()
         {
             RESTJson result = new RESTJson();
 
@@ -162,39 +162,24 @@ namespace Token.Controllers
             string timestamp = HttpContext.Current.Request.Headers["timestamp"];
             string sign = HttpContext.Current.Request.Headers["sign"];
 
+            //判断timestamp是否超时
+            if (!UtilityHelper.IsTimestampValidity(timestamp))
+            {
+                return UtilityEnum.InspectionResult.数据超时.ToString();
+            }
+
             //使用接收方密钥解密报文
             string message = ServerEncryptionHelper.PriKeyDecrypted(sign);
 
             //验签
             if (ServerEncryptionHelper.CheckSign(message))
             {
-                result.ErrCode = 1;
-                result.ErrMsg = "合法数据";
+                return UtilityEnum.InspectionResult.合法数据.ToString();
             }
             else
             {
-                result.ErrCode = -1;
-                result.ErrMsg = "非法数据";
+                return UtilityEnum.InspectionResult.非法数据.ToString();
             }
-
-            return result;
-        }
-        #endregion
-
-        #region null
-        [AllowAnonymous]
-        public bool TestCacheToken([FromBody]LoginInfo logininfo)
-        {
-            string timestemp = UtilityHelper.GetTimestamp(DateTime.Now).ToString();
-
-            Random random = new Random();
-            string strrandom = random.Next(1000, 10000).ToString();     //随机生成一个大于等于1000，小于10000的四位随机数
-
-            var data = JsonConvert.SerializeObject(logininfo);    //序列化参数
-
-            var aa = UtilityHelper.GetSignature(timestemp, strrandom, logininfo.loginName, data);
-
-            return false;
         }
         #endregion
 

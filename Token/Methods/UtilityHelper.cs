@@ -82,97 +82,18 @@ namespace Token.Methods
         }
 
         /// <summary>
-        /// 从缓存中获取对应Token
+        /// 验证时间戳是否超时
         /// </summary>
-        /// <param name="loginname">当前请求用户loginname</param>
+        /// <param name="timestamp">时间戳秒(UCT)</param>
         /// <returns></returns>
-        public static TokenInfo GetTokenInfo(string loginname)
+        public static bool IsTimestampValidity(string timestamp)
         {
-            if (string.IsNullOrEmpty(loginname))
-            {
-                return null;
-            }
+            //时间戳有效期:秒
+            int validity = Convert.ToInt32(ConfigurationManager.AppSettings["TimestampValidity"]);
+            //当前时间戳秒(UCT)
+            long nowTicks = DateTime.Now.ToUniversalTime().Ticks / 10000000;
 
-            TokenInfo tokenInfo = HttpRuntime.Cache.Get(loginname) as TokenInfo;
-
-            if (tokenInfo != null)
-            {
-                return tokenInfo;
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// 获取签名认证字符串
-        /// </summary>
-        /// <param name="timeStamp">发起请求时的时间戳（单位：毫秒）</param>
-        /// <param name="nonce">随机数</param>
-        /// <param name="loginname">当前请求用户loginname</param>
-        /// <param name="data">序列化后的参数字符串</param>
-        /// <returns></returns>
-        public static string GetSignature(string timeStamp, string nonce, string loginname, string data)
-        {
-            TokenInfo tokeninfo = GetTokenInfo(loginname);      //获取当前请求用户的Token信息
-
-            if (tokeninfo != null)
-            {
-                var hash = System.Security.Cryptography.MD5.Create();
-                //拼接签名数据
-                var signStr = timeStamp + nonce + loginname + tokeninfo.SignToken.ToString() + data;
-                //将字符串中字符按升序排序
-                var sortStr = string.Concat(signStr.OrderBy(c => c));
-                var bytes = Encoding.UTF8.GetBytes(sortStr);
-                //使用MD5加密
-                var md5Val = hash.ComputeHash(bytes);
-                //把二进制转化为大写的十六进制
-                StringBuilder result = new StringBuilder();
-                foreach (var c in md5Val)
-                {
-                    result.Append(c.ToString("X2"));
-                }
-                return result.ToString().ToUpper();
-            }
-            else
-            {
-                throw new Exception("token为null，用户名称为：" + loginname);
-            }
-        }
-
-        /// <summary>
-        /// 判断Token是否有效
-        /// </summary>
-        /// <param name="username"></param>
-        /// <returns></returns>
-        public static bool IsExitTokenInfo(string username)
-        {
-            if (HttpRuntime.Cache.Get(username) != null)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// 获取1970-01-01至dateTime的毫秒数
-        /// </summary>
-        public static long GetTimestamp(DateTime dateTime)
-        {
-            DateTime dt = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-            return (dateTime.Ticks - dt.Ticks) / 10000;
-        }
-
-        /// <summary>
-        /// 根据时间戳timestamp（单位毫秒）计算日期
-        /// </summary>
-        public static DateTime NewDate(long timestamp)
-        {
-            DateTime dt = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-            long tt = dt.Ticks + timestamp * 10000;
-            return new DateTime(tt);
+            return (nowTicks - Convert.ToInt64(timestamp)) > validity;
         }
     }
 }

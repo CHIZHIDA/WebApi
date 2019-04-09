@@ -250,7 +250,7 @@ namespace Token.Methods
             //rsa.VerifyData(hashByteSignature, mD5, Convert.FromBase64String(buffer));
             //rsa.VerifyData(hashByteSignature, CryptoConfig.MapNameToOID("MD5"), Convert.FromBase64String(buffer));
 
-            //哈希算法有：SHA1(160bit)、SHA256(256bit)、MD5(128bit)
+            //哈希算法：SHA1(160bit)、SHA256(256bit)、MD5(128bit)
             return rsa.VerifyData(hashByteSignature, CryptoConfig.MapNameToOID("SHA1"), Convert.FromBase64String(buffer));
         }
     }

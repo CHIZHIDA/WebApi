@@ -9,8 +9,9 @@ namespace Token.Models
     /// 非业务参数对象
     /// </summary>
     public class HeadersInfo
-    {        
-        private string _timestamp = ((DateTime.Now.Ticks - new DateTime(1970, 1, 1, 0, 0, 0, 0).Ticks) / 10000).ToString(); //默认将当前时间转换为时间戳
+    {
+        //获取当前Unix时间戳转换成秒
+        private string _timestamp = (DateTime.Now.ToUniversalTime().Ticks / 10000000).ToString();
         private string _sign;
 
         /// <summary>
