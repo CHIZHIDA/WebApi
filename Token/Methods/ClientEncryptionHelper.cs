@@ -186,12 +186,11 @@ namespace Token.Methods
             rsa.FromXmlString(privateXmlKey);
 
             //设置MD5签名
-            MD5 mD5 = new MD5CryptoServiceProvider();
-
-
-            //签名
+            //MD5 mD5 = new MD5CryptoServiceProvider();
             //byte[] sign = rsa.SignData(hashByteSignture, mD5);
-            byte[] sign = rsa.SignData(hashByteSignture, mD5);
+
+            //哈希算法：SHA1(160bit)、SHA256(256bit)、MD5(128bit)
+            byte[] sign = rsa.SignData(hashByteSignture, CryptoConfig.MapNameToOID("SHA1"));
 
             return Convert.ToBase64String(sign);
         }

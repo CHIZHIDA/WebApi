@@ -6,6 +6,9 @@ using System.Web;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
+using Token.Enums;
+using Token.Models;
+using System.Reflection;
 
 /*
  *     RSA 算法 操作规则
@@ -223,18 +226,30 @@ namespace Token.Methods
         /// </summary>
         /// <param name="sign"></param>
         /// <returns></returns>
-        public static bool CheckSign(string message)
+        public static string CheckSign(string message)
         {
+            //获取非业务参数header对象的长度
+            HeadersInfo headersInfo = new HeadersInfo();
+            PropertyInfo[] propertyInfo = headersInfo.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
             //截取第一个下划线'_'前的文本为消息头，最后一个下划线'_'后的文本为签名
             string[] list = message.Split('_');
+            //判断长度是否合法
+            if (list.Length < propertyInfo.Length)
+            {
+                return UtilityEnum.InspectionResult.Invalid.ToString();
+            }
+
             string messageHeader = list[0];
+            string timestamp = list[1];
             //待验签的数据
             string buffer = list[list.Length - 1];
+            byte[] fromBase64Buffer = Convert.FromBase64String(buffer);
 
             //查看消息头是否正确
             if (messageHeader != ConfigurationManager.AppSettings["messageHeader"])
             {
-                return false;
+                return UtilityEnum.InspectionResult.Invalid.ToString();
             }
 
             //文本截取签名（含下划线'_'）后，是已签名的数据
@@ -245,13 +260,26 @@ namespace Token.Methods
             var rsa = new RSACryptoServiceProvider();
             var publicXmlKey = File.ReadAllText(Path.Combine(ConfigurationManager.AppSettings["basePathToStoreClientKeys"], "ClientRSA.Pub"));
             rsa.FromXmlString(publicXmlKey);
-            
+
             //MD5 mD5 = new MD5CryptoServiceProvider();
             //rsa.VerifyData(hashByteSignature, mD5, Convert.FromBase64String(buffer));
             //rsa.VerifyData(hashByteSignature, CryptoConfig.MapNameToOID("MD5"), Convert.FromBase64String(buffer));
 
             //哈希算法：SHA1(160bit)、SHA256(256bit)、MD5(128bit)
-            return rsa.VerifyData(hashByteSignature, CryptoConfig.MapNameToOID("SHA1"), Convert.FromBase64String(buffer));
+            if (rsa.VerifyData(hashByteSignature, CryptoConfig.MapNameToOID("SHA1"), fromBase64Buffer))
+            {
+                //判断timestamp是否超时
+                if (UtilityHelper.IsTimestampValidity(timestamp))
+                {
+                    return UtilityEnum.InspectionResult.Timeout.ToString();
+                }
+            }
+            else
+            {
+                return UtilityEnum.InspectionResult.Invalid.ToString();
+            }
+
+            return UtilityEnum.InspectionResult.Validity.ToString();
         }
     }
 }

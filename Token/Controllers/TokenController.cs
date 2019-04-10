@@ -154,7 +154,7 @@ namespace Token.Controllers
         /// <returns></returns>
         [AllowAnonymous]
         [HttpPost]
-        public static string ServerInspectionSign()
+        public string ServerInspectionSign()
         {
             RESTJson result = new RESTJson();
 
@@ -163,23 +163,16 @@ namespace Token.Controllers
             string sign = HttpContext.Current.Request.Headers["sign"];
 
             //判断timestamp是否超时
-            if (!UtilityHelper.IsTimestampValidity(timestamp))
+            if (UtilityHelper.IsTimestampValidity(timestamp))
             {
-                return UtilityEnum.InspectionResult.数据超时.ToString();
+                return UtilityEnum.InspectionResult.Timeout.ToString();
             }
 
             //使用接收方密钥解密报文
             string message = ServerEncryptionHelper.PriKeyDecrypted(sign);
 
             //验签
-            if (ServerEncryptionHelper.CheckSign(message))
-            {
-                return UtilityEnum.InspectionResult.合法数据.ToString();
-            }
-            else
-            {
-                return UtilityEnum.InspectionResult.非法数据.ToString();
-            }
+            return ServerEncryptionHelper.CheckSign(message);
         }
         #endregion
 
