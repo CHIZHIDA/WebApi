@@ -25,7 +25,7 @@ using System.Reflection;
  *     假设A传送内容为mark
  *     1.组装报文,如:RSA_mark    使用固定的消息头方便对方知道解密成功
  *     2.用A的私钥对 RSA_mark 签名,假设签名结果为:XJ9B5D1
- *     3.把签名结果z组装在原报文末尾:RSA_mark_XJ9B5D1
+ *     3.把签名结果组装在原报文末尾:RSA_mark_XJ9B5D1
  *     4.用B的公钥对 RSA_mark_XJ9B5D1 加密,结果假设为: NE03WBEN12=
  *     5.将 NE03WBEN12= 发送给B
  *     
@@ -242,9 +242,9 @@ namespace Token.Methods
 
             string messageHeader = list[0];
             string timestamp = list[1];
-            //待验签的数据
-            string buffer = list[list.Length - 1];
-            byte[] fromBase64Buffer = Convert.FromBase64String(buffer);
+            //要验证的签名数据
+            string signature = list[list.Length - 1];
+            byte[] hashByteSignature = Convert.FromBase64String(signature);
 
             //查看消息头是否正确
             if (messageHeader != ConfigurationManager.AppSettings["messageHeader"])
@@ -253,8 +253,8 @@ namespace Token.Methods
             }
 
             //文本截取签名（含下划线'_'）后，是已签名的数据
-            string signature = message.Substring(0, message.Length - buffer.Length - 1);
-            byte[] hashByteSignature = Encoding.Unicode.GetBytes(signature);
+            string buffer = message.Substring(0, message.Length - signature.Length - 1);
+            byte[] fromBase64Buffer = Encoding.Unicode.GetBytes(buffer);
 
             //加载发送方的公钥进行验签
             var rsa = new RSACryptoServiceProvider();
@@ -266,7 +266,7 @@ namespace Token.Methods
             //rsa.VerifyData(hashByteSignature, CryptoConfig.MapNameToOID("MD5"), Convert.FromBase64String(buffer));
 
             //哈希算法：SHA1(160bit)、SHA256(256bit)、MD5(128bit)
-            if (rsa.VerifyData(hashByteSignature, CryptoConfig.MapNameToOID("SHA1"), fromBase64Buffer))
+            if (rsa.VerifyData(fromBase64Buffer, CryptoConfig.MapNameToOID("SHA1"), hashByteSignature))
             {
                 //判断timestamp是否超时
                 if (UtilityHelper.IsTimestampValidity(timestamp))
