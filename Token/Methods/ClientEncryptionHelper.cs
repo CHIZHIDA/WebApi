@@ -115,12 +115,13 @@ namespace Token.Methods
                 try
                 {
                     //加载公钥
-                    var publicXmlKey = File.ReadAllText(pathToPublicKey);
+                    string publicXmlKey = File.ReadAllText(pathToPublicKey);
                     rsa.FromXmlString(publicXmlKey);
 
-                    var bytesToEncrypt = System.Text.Encoding.Unicode.GetBytes(plainText);
+                    byte[] bytesToEncrypt = System.Text.Encoding.Unicode.GetBytes(plainText);
 
-                    var bytesEncrypted = rsa.Encrypt(bytesToEncrypt, false);
+                    //加密
+                    byte[] bytesEncrypted = rsa.Encrypt(bytesToEncrypt, false);
 
                     return Convert.ToBase64String(bytesEncrypted);
                 }
@@ -144,12 +145,13 @@ namespace Token.Methods
                 try
                 {
                     //加载私钥
-                    var privateXmlKey = File.ReadAllText(pathToPrivateKey);
+                    string privateXmlKey = File.ReadAllText(pathToPrivateKey);
                     rsa.FromXmlString(privateXmlKey);
 
-                    var bytesEncrypted = Convert.FromBase64String(encryptedText);
+                    byte[] bytesEncrypted = Convert.FromBase64String(encryptedText);
 
-                    var bytesPlainText = rsa.Decrypt(bytesEncrypted, false);
+                    //解密
+                    byte[] bytesPlainText = rsa.Decrypt(bytesEncrypted, false);
 
                     return System.Text.Encoding.Unicode.GetString(bytesPlainText);
                 }

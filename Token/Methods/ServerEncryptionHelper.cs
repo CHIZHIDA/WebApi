@@ -154,7 +154,6 @@ namespace Token.Methods
                     msInput.Close();
                     byte[] result = msOuput.ToArray();    //得到加密结果
                     msOuput.Close();
-                    //var bytesEncrypted = rsa.Encrypt(bytesToEncrypt, false);
 
                     return Convert.ToBase64String(result);
                 }
@@ -168,7 +167,7 @@ namespace Token.Methods
         /// <summary>
         /// Decrypts encrypted text given a RSA private key file path.给定路径的RSA私钥文件解密 加密文本
         /// </summary>
-        /// <param name="encryptedText">加密的密文</param>
+        /// <param name="encryptedText">密文</param>
         /// <param name="pathToPrivateKey">用于解密的私钥路径.</param>
         /// <returns>未加密数据的字符串</returns>
         private static string Decrypt(string encryptedText, string pathToPrivateKey)
@@ -178,10 +177,10 @@ namespace Token.Methods
                 try
                 {
                     //加载私钥
-                    var privateXmlKey = File.ReadAllText(pathToPrivateKey);
+                    string privateXmlKey = File.ReadAllText(pathToPrivateKey);
                     rsa.FromXmlString(privateXmlKey);
 
-                    var bytesEncrypted = Convert.FromBase64String(encryptedText);
+                    byte[] bytesEncrypted = Convert.FromBase64String(encryptedText);
 
                     //分段解密
                     //1024位的证书，加密时最大支持117个字节，解密时为128；2048位的证书，加密时最大支持245个字节，解密时为256。
