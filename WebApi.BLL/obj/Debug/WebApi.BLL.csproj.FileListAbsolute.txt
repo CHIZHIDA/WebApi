@@ -18,3 +18,23 @@ C:\Users\Project\WebApi\WebApi.BLL\obj\Debug\WebApi.BLL.dll
 C:\Users\Project\WebApi\WebApi.BLL\obj\Debug\WebApi.BLL.pdb
 C:\Users\Project\WebApi\WebApi.BLL\bin\Debug\Autofac.dll
 C:\Users\Project\WebApi\WebApi.BLL\bin\Debug\Autofac.xml
+C:\Users\Project\GIT Repository\WebApi\WebApi.BLL\bin\Debug\WebApi.BLL.dll
+C:\Users\Project\GIT Repository\WebApi\WebApi.BLL\bin\Debug\WebApi.BLL.pdb
+C:\Users\Project\GIT Repository\WebApi\WebApi.BLL\bin\Debug\Autofac.dll
+C:\Users\Project\GIT Repository\WebApi\WebApi.BLL\bin\Debug\WebApi.Common.dll
+C:\Users\Project\GIT Repository\WebApi\WebApi.BLL\bin\Debug\WebApi.DAL.dll
+C:\Users\Project\GIT Repository\WebApi\WebApi.BLL\bin\Debug\WebApi.Model.dll
+C:\Users\Project\GIT Repository\WebApi\WebApi.BLL\bin\Debug\EntityFramework.dll
+C:\Users\Project\GIT Repository\WebApi\WebApi.BLL\bin\Debug\WebApi.Common.pdb
+C:\Users\Project\GIT Repository\WebApi\WebApi.BLL\bin\Debug\WebApi.DAL.pdb
+C:\Users\Project\GIT Repository\WebApi\WebApi.BLL\bin\Debug\WebApi.DAL.dll.config
+C:\Users\Project\GIT Repository\WebApi\WebApi.BLL\bin\Debug\WebApi.Model.pdb
+C:\Users\Project\GIT Repository\WebApi\WebApi.BLL\bin\Debug\WebApi.Model.dll.config
+C:\Users\Project\GIT Repository\WebApi\WebApi.BLL\bin\Debug\Autofac.xml
+C:\Users\Project\GIT Repository\WebApi\WebApi.BLL\bin\Debug\EntityFramework.xml
+C:\Users\Project\GIT Repository\WebApi\WebApi.BLL\bin\Debug\zh-Hans\EntityFramework.resources.dll
+C:\Users\Project\GIT Repository\WebApi\WebApi.BLL\obj\Debug\WebApi.BLL.csprojAssemblyReference.cache
+C:\Users\Project\GIT Repository\WebApi\WebApi.BLL\obj\Debug\WebApi.BLL.csproj.CoreCompileInputs.cache
+C:\Users\Project\GIT Repository\WebApi\WebApi.BLL\obj\Debug\WebApi.BLL.csproj.CopyComplete
+C:\Users\Project\GIT Repository\WebApi\WebApi.BLL\obj\Debug\WebApi.BLL.dll
+C:\Users\Project\GIT Repository\WebApi\WebApi.BLL\obj\Debug\WebApi.BLL.pdb

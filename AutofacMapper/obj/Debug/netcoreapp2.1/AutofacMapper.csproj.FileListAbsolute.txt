@@ -1,0 +1,14 @@
+C:\Users\Project\GIT Repository\WebApi\AutofacMapper\bin\Debug\netcoreapp2.1\AutofacMapper.deps.json
+C:\Users\Project\GIT Repository\WebApi\AutofacMapper\bin\Debug\netcoreapp2.1\AutofacMapper.runtimeconfig.json
+C:\Users\Project\GIT Repository\WebApi\AutofacMapper\bin\Debug\netcoreapp2.1\AutofacMapper.runtimeconfig.dev.json
+C:\Users\Project\GIT Repository\WebApi\AutofacMapper\bin\Debug\netcoreapp2.1\AutofacMapper.dll
+C:\Users\Project\GIT Repository\WebApi\AutofacMapper\obj\Debug\netcoreapp2.1\AutofacMapper.csprojAssemblyReference.cache
+C:\Users\Project\GIT Repository\WebApi\AutofacMapper\obj\Debug\netcoreapp2.1\AutofacMapper.csproj.CoreCompileInputs.cache
+C:\Users\Project\GIT Repository\WebApi\AutofacMapper\obj\Debug\netcoreapp2.1\AutofacMapper.RazorAssemblyInfo.cache
+C:\Users\Project\GIT Repository\WebApi\AutofacMapper\obj\Debug\netcoreapp2.1\AutofacMapper.RazorAssemblyInfo.cs
+C:\Users\Project\GIT Repository\WebApi\AutofacMapper\obj\Debug\netcoreapp2.1\AutofacMapper.AssemblyInfoInputs.cache
+C:\Users\Project\GIT Repository\WebApi\AutofacMapper\obj\Debug\netcoreapp2.1\AutofacMapper.AssemblyInfo.cs
+C:\Users\Project\GIT Repository\WebApi\AutofacMapper\obj\Debug\netcoreapp2.1\AutofacMapper.RazorTargetAssemblyInfo.cache
+C:\Users\Project\GIT Repository\WebApi\AutofacMapper\bin\Debug\netcoreapp2.1\AutofacMapper.pdb
+C:\Users\Project\GIT Repository\WebApi\AutofacMapper\obj\Debug\netcoreapp2.1\AutofacMapper.dll
+C:\Users\Project\GIT Repository\WebApi\AutofacMapper\obj\Debug\netcoreapp2.1\AutofacMapper.pdb
